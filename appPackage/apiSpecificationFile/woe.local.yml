@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: WoE Service
+  description: A service to support the Where On Earth game
+  version: 1.0.0
+servers:
+  - url: ${{OPENAPI_SERVER_URL}}/api
+    description: The Where On Earth game service
+paths:
+  /checkStatus:
+    get:
+      operationId: checkStatus
+      summary: Check status of the game
+      description: Returns the current status of the game
+      responses:
+        '200':
+          description: The current status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: The current statis of the game

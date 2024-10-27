@@ -1,0 +1,72 @@
+{
+  "$schema": "https://aka.ms/json-schemas/copilot/plugin/v2.1/schema.json",
+  "schema_version": "v2.1",
+  "name_for_human": "WoEAgent${{APP_NAME_SUFFIX}}",
+  "description_for_human": "Play the Where On Earth game",
+  "description_for_model": "Plugin for checking the status of the game.",
+  "functions": [
+    {
+      "name": "checkStatus",
+      "description": "Returns the current status of the Where On Earth Game",
+      "capabilities": {
+        "response_semantics": {
+          "data_path": "$.results",
+          "properties": {
+            "title": "$.status"
+          },
+          "static_template": {
+            "type": "AdaptiveCard",
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "version": "1.5",
+            "body": [
+              {
+                "type": "Container",
+                "$data": "${$root}",
+                "items": [
+                  {
+                    "type": "TextBlock",
+                    "text": "status: ${if(status, status, 'N/A')}",
+                    "wrap": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      } 
+    }    
+  ],
+  "runtimes": [
+    {
+      "type": "OpenApi",
+      "auth": {
+        "type": "None"
+      },
+      "spec": {
+        "url": "apiSpecificationFile/woe.local.yml",
+        "progress_style": "ShowUsageWithInputAndOutput"
+      },
+      "run_for_functions": ["checkStatus"]
+    }
+  ],
+  "capabilities": {
+    "localization": {},
+    "conversation_starters": [
+      {
+        "text": "Start game"
+    },
+    {
+        "text": "Find image"
+    },
+    {
+        "text": "Select image"
+    },
+    {
+        "text": "End game"
+    },
+    {
+        "text": "Check status"
+    }
+    ]
+  }
+}

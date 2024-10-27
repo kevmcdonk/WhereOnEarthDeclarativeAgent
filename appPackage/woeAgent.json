@@ -1,0 +1,30 @@
+{
+    "$schema": "https://aka.ms/json-schemas/copilot/declarative-agent/v1.0/schema.json",
+    "version": "v1.0",
+    "name": "WoEAgent${{APP_NAME_SUFFIX}}",
+    "description": "This declarative agent lets people join in with the Where On Earth game.",
+    "instructions": "$[file('instruction.txt')]",
+    "conversation_starters": [
+        {
+            "text": "Start game"
+        },
+        {
+            "text": "Find image"
+        },
+        {
+            "text": "Select image"
+        },
+        {
+            "text": "End game"
+        },
+        {
+            "text": "Check status"
+        }
+    ],
+    "actions": [
+        {
+            "id": "woePlugin",
+            "file": "ai-plugin.${{TEAMSFX_ENV}}.json"
+        }
+    ]
+}
