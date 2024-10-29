@@ -7,7 +7,7 @@
   "functions": [
     {
       "name": "checkStatus",
-      "description": "Returns the current status of the Where On Earth Game when asked 'check status'",
+      "description": "Check the status of the current game",
       "capabilities": {
         "response_semantics": {
           "data_path": "$.results",
@@ -40,10 +40,11 @@
     {
       "type": "OpenApi",
       "auth": {
-        "type": "None"
+        "type": "OAuthPluginVault",
+        "reference_id": "${{OAUTH2AUTHCODE_CONFIGURATION_ID}}"
       },
       "spec": {
-        "url": "apiSpecificationFile/woe.local.yml",
+        "url": "apiSpecificationFile/woe.test.yml",
         "progress_style": "ShowUsageWithInputAndOutput"
       },
       "run_for_functions": ["checkStatus"]

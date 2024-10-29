@@ -32,8 +32,6 @@
             }
         },
         {
-            // Start the local tunnel service to forward public URL to local port and inspect traffic.
-            // See https://aka.ms/teamsfx-tasks/local-tunnel for the detailed args definitions.
             "label": "Start local tunnel",
             "type": "teamsfx",
             "command": "debug-start-local-tunnel",
@@ -45,7 +43,7 @@
                         "protocol": "http",
                         "access": "public",
                         "writeToEnvironmentFile": {
-                            "endpoint": "OPENAPI_SERVER_URL", // output tunnel endpoint as OPENAPI_SERVER_URL
+                            "endpoint": "OPENAPI_SERVER_URL"
                         }
                     }
                 ],
@@ -75,7 +73,7 @@
             "dependsOn": [
                 "Start backend"
             ]
-        },        
+        },
         {
             "label": "Start backend",
             "type": "shell",
@@ -124,6 +122,45 @@
             "presentation": {
                 "reveal": "silent"
             }
+        },
+        {
+            "type": "func",
+            "label": "func: host start",
+            "command": "host start",
+            "problemMatcher": "$func-node-watch",
+            "isBackground": true,
+            "dependsOn": "npm watch (functions)"
+        },
+        {
+            "type": "shell",
+            "label": "npm build (functions)",
+            "command": "npm run build",
+            "dependsOn": "npm install (functions)",
+            "problemMatcher": "$tsc"
+        },
+        {
+            "type": "shell",
+            "label": "npm watch (functions)",
+            "command": "npm run watch",
+            "dependsOn": "npm install (functions)",
+            "problemMatcher": "$tsc-watch",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "isBackground": true
+        },
+        {
+            "type": "shell",
+            "label": "npm install (functions)",
+            "command": "npm install"
+        },
+        {
+            "type": "shell",
+            "label": "npm prune (functions)",
+            "command": "npm prune --production",
+            "dependsOn": "npm build (functions)",
+            "problemMatcher": []
         }
     ]
 }
