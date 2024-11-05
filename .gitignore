@@ -2,6 +2,7 @@
 # TeamsFx files
 env/.env.*.user
 env/.env.local
+.env.dev
 .DS_Store
 build
 appPackage/build
@@ -28,4 +29,4 @@ local.settings.json
 
 # Local data
 .localConfigs
-env/.env.dev
+

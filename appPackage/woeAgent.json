@@ -6,7 +6,8 @@
     "instructions": "$[file('instruction.txt')]",
     "conversation_starters": [
         {
-            "text": "Start game"
+            "title": "Start game",
+            "text": "Initiate the daily game."
         },
         {
             "text": "Find image"
@@ -18,13 +19,14 @@
             "text": "End game"
         },
         {
-            "text": "Check status"
+            "title": "Check Status",
+            "text": "What is the status of the game?"
         }
     ],
     "actions": [
         {
             "id": "woePlugin",
-            "file": "ai-plugin.${{TEAMSFX_ENV}}.json"
+            "file": "ai-plugin.local.json"
         }
     ]
 }

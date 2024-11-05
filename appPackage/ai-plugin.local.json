@@ -3,14 +3,14 @@
   "schema_version": "v2.1",
   "name_for_human": "WoEAgent${{APP_NAME_SUFFIX}}",
   "description_for_human": "Play the Where On Earth game",
-  "description_for_model": "Plugin for checking the status of the game.",
+  "description_for_model": "Plugin for running the game of Where On Earth.",
   "functions": [
     {
       "name": "checkStatus",
-      "description": "Returns the current status of the Where On Earth Game when asked 'check status'",
+      "description": "Returns the current status of the Where On Earth Game when asked 'What is the status of the game?'",
       "capabilities": {
         "response_semantics": {
-          "data_path": "$.results",
+          "data_path": "$.status",
           "properties": {
             "title": "$.status"
           },
@@ -34,7 +34,151 @@
           }
         }
       } 
-    }    
+    },
+    {
+      "name": "startGame",
+      "description": "Starts the game",
+      "capabilities": {
+        "response_semantics": {
+          "data_path": "",
+          "properties": {
+            "title": "Started"
+          },
+          "static_template": {
+            "type": "AdaptiveCard",
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "version": "1.5",
+            "body": [
+              {
+                "type": "Container",
+                "items": [
+                  {
+                    "type": "TextBlock",
+                    "text": "status: Game started",
+                    "wrap": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      } 
+    },
+    {
+      "name": "findImage",
+      "description": "Searches for an image",
+      "capabilities": {
+        "response_semantics": {
+          "data_path": "",
+          "properties": {
+            "title": "Started"
+          },
+          "static_template": {
+            "type": "AdaptiveCard",
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "version": "1.5",
+            "body": [
+              {
+                "type": "Container",
+                "items": [
+                  {
+                    "type": "TextBlock",
+                    "text": "status: Game started",
+                    "wrap": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      } 
+    },
+    {
+      "name": "selectImage",
+      "description": "selects image",
+      "capabilities": {
+        "response_semantics": {
+          "data_path": "",
+          "properties": {
+            "title": "Started"
+          },
+          "static_template": {
+            "type": "AdaptiveCard",
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "version": "1.5",
+            "body": [
+              {
+                "type": "Container",
+                "items": [
+                  {
+                    "type": "TextBlock",
+                    "text": "status: Game started",
+                    "wrap": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      } 
+    },
+    {
+      "name": "listRepairs",
+      "description": "Returns a list of repairs with their details and images",
+      "capabilities": {
+        "response_semantics": {
+          "data_path": "$.results",
+          "properties": {
+            "title": "$.title",
+            "subtitle": "$.description",
+            "url": "$.image"
+          },
+          "static_template": {
+            "type": "AdaptiveCard",
+            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+            "version": "1.5",
+            "body": [
+              {
+                "type": "Container",
+                "$data": "${$root}",
+                "items": [
+                  {
+                    "type": "TextBlock",
+                    "text": "id: ${if(id, id, 'N/A')}",
+                    "wrap": true
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "title: ${if(title, title, 'N/A')}",
+                    "wrap": true
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "description: ${if(description, description, 'N/A')}",
+                    "wrap": true
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "assignedTo: ${if(assignedTo, assignedTo, 'N/A')}",
+                    "wrap": true
+                  },
+                  {
+                    "type": "TextBlock",
+                    "text": "date: ${if(date, date, 'N/A')}",
+                    "wrap": true
+                  },
+                  {
+                    "type": "Image",
+                    "url": "${image}",
+                    "$when": "${image != null}"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      } 
+    } 
   ],
   "runtimes": [
     {
@@ -46,14 +190,15 @@
         "url": "apiSpecificationFile/woe.local.yml",
         "progress_style": "ShowUsageWithInputAndOutput"
       },
-      "run_for_functions": ["checkStatus"]
+      "run_for_functions": ["checkStatus","startGame","findImage","selectImage","listRepairs"]
     }
   ],
   "capabilities": {
     "localization": {},
     "conversation_starters": [
       {
-        "text": "Start game"
+        "title": "Start game",
+        "text": "Initiate the daily game."
     },
     {
         "text": "Find image"
@@ -65,7 +210,8 @@
         "text": "End game"
     },
     {
-        "text": "Check status"
+        "title": "Check Status",
+        "text": "What is the status of the game?"
     }
     ]
   }
